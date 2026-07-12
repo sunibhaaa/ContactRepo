@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.container {
+    width: 650px;
+}
+
+.form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .15);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.photo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    font-size: 70px;
+}
+
+.photo button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.save-btn {
+    margin-top: 30px;
+    padding: 14px;
+    background: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.save-btn:hover {
+    background: #125aa3;
+}
+
+.saved {
+    margin-top: 40px;
+}
+
+.saved h2 {
+    margin-bottom: 20px;
+}
+
+.contact {
+    background: white;
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+}
+
+.contact-info h3 {
+    margin-bottom: 8px;
+}
+
+.contact-info p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.delete-btn {
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #c62828;
+}
