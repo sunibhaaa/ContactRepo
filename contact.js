@@ -6,9 +6,14 @@ const phoneInput = document.getElementById("phone");
 const emailInput = document.getElementById("email")
 
 const contactList = document.getElementById("contact-list")
+const searchInput = document.getElementById("search")
 
 
 const contacts = [];
+
+searchInput.addEventListener("input", function () {
+    displayContacts();
+});
 
 form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -32,34 +37,40 @@ form.addEventListener("submit", function (event) {
 function displayContacts() {
     contactList.innerHTML = "";
 
+    const search = searchInput.value.toLowerCase();
+
     for (let i = 0; i < contacts.length; i++) {
+        if (contacts[i].firstName.toLowerCase().includes(search) || contacts[i].lastName.toLowerCase().includes(search)) {
 
-        const card = document.createElement("div");
-        card.className = "contact";
+            const card = document.createElement("div");
+            card.className = "contact";
 
-        const name = document.createElement("h3");
-        name.textContent = contacts[i].firstName + " " + contacts[i].lastName;
+            const name = document.createElement("h3");
+            name.textContent = contacts[i].firstName + " " + contacts[i].lastName;
 
-        const phone = document.createElement("p");
-        phone.textContent = contacts[i].phone;
+            const phone = document.createElement("p");
+            phone.textContent = contacts[i].phone;
 
-        const email = document.createElement("p");
-        email.textContent = contacts[i].email;
+            const email = document.createElement("p");
+            email.textContent = contacts[i].email;
 
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
 
-        deleteButton.addEventListener("click", function () {
-            contacts.splice(i, 1);
-            displayContacts();
-        });
+            deleteButton.addEventListener("click", function () {
+                contacts.splice(i, 1);
+                displayContacts();
+            });
 
-        card.appendChild(name);
-        card.appendChild(phone);
-        card.appendChild(email);
-        card.appendChild(deleteButton);
+            card.appendChild(name);
+            card.appendChild(phone);
+            card.appendChild(email);
+            card.appendChild(deleteButton);
 
-        contactList.appendChild(card);
+            contactList.appendChild(card);
+
+        }
+
     }
 }
 
