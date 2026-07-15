@@ -39,39 +39,41 @@ function displayContacts() {
 
     const search = searchInput.value.toLowerCase();
 
-    for (let i = 0; i < contacts.length; i++) {
-        if (contacts[i].firstName.toLowerCase().includes(search) || contacts[i].lastName.toLowerCase().includes(search)) {
+    const filterContacts = contacts.filter(contact =>
+        contact.firstName.toLowerCase().includes(search) || contact.lastName.toLowerCase().includes(search));
 
-            const card = document.createElement("div");
-            card.className = "contact";
+    filterContacts.forEach((contact) => {
 
-            const name = document.createElement("h3");
-            name.textContent = contacts[i].firstName + " " + contacts[i].lastName;
+        const card = document.createElement("div");
+        card.className = "contact";
 
-            const phone = document.createElement("p");
-            phone.textContent = contacts[i].phone;
+        const name = document.createElement("h3");
+        name.textContent = contact.firstName + " " + contact.lastName;
 
-            const email = document.createElement("p");
-            email.textContent = contacts[i].email;
+        const phone = document.createElement("p");
+        phone.textContent = contact.phone;
 
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
+        const email = document.createElement("p");
+        email.textContent = contact.email;
 
-            deleteButton.addEventListener("click", function () {
-                contacts.splice(i, 1);
-                displayContacts();
-            });
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
 
-            card.appendChild(name);
-            card.appendChild(phone);
-            card.appendChild(email);
-            card.appendChild(deleteButton);
+        deleteButton.addEventListener("click", () => {
 
-            contactList.appendChild(card);
+            const index = contacts.indexOf(contact);
+            contacts.splice(index, 1);
+            displayContacts();
+        });
 
-        }
+        card.appendChild(name);
+        card.appendChild(phone);
+        card.appendChild(email);
+        card.appendChild(deleteButton);
 
-    }
+        contactList.appendChild(card);
+
+    });
 }
 
 
