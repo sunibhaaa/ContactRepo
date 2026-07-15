@@ -11,23 +11,24 @@ const searchInput = document.getElementById("search")
 
 const contacts = [];
 
-searchInput.addEventListener("input", function () {
+searchInput.addEventListener("input", () => {
     displayContacts();
 });
 
-form.addEventListener("submit", function (event) {
+form.addEventListener("submit", (event) => {
     event.preventDefault();
 
 
 
     const contact = {
+        id: Date.now(),
         firstName: firstNameInput.value,
         lastName: lastNameInput.value,
         phone: phoneInput.value,
         email: emailInput.value
     };
 
-    console.log("Total counts:" + contacts.length);
+    console.log(contact);
 
     contacts.push(contact);
     displayContacts();
@@ -39,13 +40,15 @@ function displayContacts() {
 
     const search = searchInput.value.toLowerCase();
 
-    const filterContacts = contacts.filter(contact =>
+    const filteredContacts = contacts.filter(contact =>
         contact.firstName.toLowerCase().includes(search) || contact.lastName.toLowerCase().includes(search));
 
-    filterContacts.forEach((contact) => {
+    filteredContacts.forEach((contact) => {
 
         const card = document.createElement("div");
         card.className = "contact";
+
+        card.dataset.id = contact.id;
 
         const name = document.createElement("h3");
         name.textContent = contact.firstName + " " + contact.lastName;
@@ -57,14 +60,8 @@ function displayContacts() {
         email.textContent = contact.email;
 
         const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-btn";
         deleteButton.textContent = "Delete";
-
-        deleteButton.addEventListener("click", () => {
-
-            const index = contacts.indexOf(contact);
-            contacts.splice(index, 1);
-            displayContacts();
-        });
 
         card.appendChild(name);
         card.appendChild(phone);
@@ -75,5 +72,21 @@ function displayContacts() {
 
     });
 }
+contactList.addEventListener("click", (event) => {
+    const deleteButton = event.target.closest(".delete-btn");
+
+    if (!deleteButton) {
+        return;
+    }
+
+    const card = deleteButton.closest(".contact");
+    const id = Number(card.dataset.id);
+    const index = contacts.findIndex(contact => contact.id === id);
+
+    if (index !== -1) {
+        contacts.splice(index, 1);
+        displayContacts();
+    }
+})
 
 
