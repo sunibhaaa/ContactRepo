@@ -11,6 +11,8 @@ const searchInput = document.getElementById("search")
 
 const contacts = [];
 
+let editingContactId = null;
+
 searchInput.addEventListener("input", () => {
     displayContacts();
 });
@@ -18,19 +20,30 @@ searchInput.addEventListener("input", () => {
 form.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    if (editingContactId === null) {
+        const contact = {
+            id: Date.now(),
+            firstName: firstNameInput.value,
+            lastName: lastNameInput.value,
+            phone: phoneInput.value,
+            email: emailInput.value
+        };
 
+        contacts.push(contact);
 
-    const contact = {
-        id: Date.now(),
-        firstName: firstNameInput.value,
-        lastName: lastNameInput.value,
-        phone: phoneInput.value,
-        email: emailInput.value
-    };
+    } else {
 
-    console.log(contact);
+        const contact = contacts.find(
+            contact => contact.id === editingContactId
+        );
+        contact.firstName = firstNameInput.value;
+        contact.lastName = lastNameInput.value;
+        contact.phone = phoneInput.value;
+        contact.email = emailInput.value;
 
-    contacts.push(contact);
+        editingContactId = null;
+    }
+
     displayContacts();
     form.reset();
 });
@@ -63,30 +76,51 @@ function displayContacts() {
         deleteButton.className = "delete-btn";
         deleteButton.textContent = "Delete";
 
+        const editButton = document.createElement("button");
+        editButton.className = "edit-btn";
+        editButton.textContent = "Edit";
+
         card.appendChild(name);
         card.appendChild(phone);
         card.appendChild(email);
         card.appendChild(deleteButton);
+        card.appendChild(editButton);
 
         contactList.appendChild(card);
 
     });
 }
 contactList.addEventListener("click", (event) => {
-    const deleteButton = event.target.closest(".delete-btn");
+    const card = event.target.closest(".contact");
 
-    if (!deleteButton) {
+    if (!card) {
         return;
     }
 
-    const card = deleteButton.closest(".contact");
     const id = Number(card.dataset.id);
-    const index = contacts.findIndex(contact => contact.id === id);
 
-    if (index !== -1) {
-        contacts.splice(index, 1);
-        displayContacts();
+    if (event.target.closest(".delete-btn")) {
+        const index = contacts.findIndex(
+            contact => contact.id === id
+        );
+
+        if (index !== -1) {
+            contact.splice(index, 1);
+            displayContacts();
+        }
     }
-})
+
+    if (event.target.closest(".edit-btn")) {
+        const contact = contacts.find(
+            contact => contact.id === id
+        );
+
+        firstNameInput.value = contact.firstName;
+        lastNameInput.value = contact.lastName;
+        phoneInput.value = contact.phone;
+        emailInput.value = contact.email;
+        editingContactId = contact.id;
+    }
+});
 
 
